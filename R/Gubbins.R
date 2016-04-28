@@ -1,5 +1,5 @@
 
-#' Refreshes package with latest changes
+#' Refresh package with latest changes
 #'
 #' Re-document and reinstall a local package
 #' @param package String: name of package to be re-documented and reinstalled.
@@ -23,4 +23,15 @@ update.functions <- function(package = "IO.pixels") {
     setwd("..")
     install(package)
     setwd(org.dir)
+}
+
+
+#' Crop a pdf
+#' 
+#' Call 'pdfcrop' function without having to switch to terminal
+#' @param filenm String giving filename to be cropped (including full path and extension)
+#' @export
+#' 
+crop.pdf <- function(filenm) {
+    system2('pdfcrop', c(filenm, filenm))
 }

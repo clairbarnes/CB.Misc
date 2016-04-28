@@ -2,7 +2,7 @@
 % Please edit documentation in R/Gubbins.R
 \name{update.functions}
 \alias{update.functions}
-\title{Refreshes package with latest changes}
+\title{Refresh package with latest changes}
 \usage{
 update.functions(package = "IO.pixels")
 }
