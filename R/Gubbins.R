@@ -35,3 +35,16 @@ update.functions <- function(package = "IO.pixels") {
 crop.pdf <- function(filenm) {
     system2('pdfcrop', c(filenm, filenm))
 }
+
+
+#' Install packages
+#' 
+#' Download & install packages after upgrading R
+#' @export
+#' 
+install.useful.packages <- function() {
+    
+    useful.packages <- list("tiff", "spatstat", "polyclip", "XML", "plyr", "raster", 
+                     "reshape", "MASS", "SuppDists", "igraph", "mmand", "knitr")
+    lapply(useful.packages, require)
+}
