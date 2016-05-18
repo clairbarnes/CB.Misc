@@ -48,3 +48,19 @@ install.useful.packages <- function() {
                      "reshape", "MASS", "SuppDists", "igraph", "mmand", "knitr")
     lapply(useful.packages, require)
 }
+
+
+#' Replace 0 with "-"
+#' 
+#' Prepare an object (usually a table or data frame) for output to csv for LaTeX, by rounding to set DP and replacing 0 with "-".
+#' @param qq Object to be prepared
+#' @param dp Decimal places desired
+#' @return Original object, with 0 (and, incidentally, NA) replaced with "-"
+#' @export
+#' 
+prep.csv <- function(qq, dp = 1) {
+    qq[qq == 0] <- NA
+    qq <- round(qq, dp)
+    qq[is.na(qq)] <- "-"
+    qq
+}

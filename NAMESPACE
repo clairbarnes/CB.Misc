@@ -2,4 +2,5 @@
 
 export(crop.pdf)
 export(install.useful.packages)
+export(prep.csv)
 export(update.functions)
