@@ -45,7 +45,7 @@ crop.pdf <- function(filenm) {
 install.useful.packages <- function() {
     
     useful.packages <- list("tiff", "spatstat", "polyclip", "XML", "plyr", "raster", 
-                     "reshape", "MASS", "SuppDists", "igraph", "mmand", "knitr")
+                     "reshape", "MASS", "SuppDists", "igraph", "mmand", "knitr", "abind")
     lapply(useful.packages, require)
 }
 
