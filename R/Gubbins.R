@@ -64,3 +64,34 @@ prep.csv <- function(qq, dp = 1) {
     qq[is.na(qq)] <- "-"
     qq
 }
+
+
+#' convert integer date to string, with dashes
+#'
+#' @param dt Integer date, in format yymmdd
+#' @return String date, yy-mm-dd
+#' @export
+#' 
+fancy.date <- function(dt) {
+    dt <- toString(dt)
+    paste0(substring(dt, 1, 2), "-", substring(dt, 3, 4), "-", substring(dt, 5, 6))
+}
+
+
+#' Merge list of data frames
+#' 
+#' Recursively merge list of data frames with a 'master data frame'
+#' @param head Data frame with which all others are to be merge (for example, a list of coordinates, to which classifications can be added)
+#' @param df.list List of additional data frames to be merged with the head
+#' @param ... Additional optional parameters to be passed to the \link{\code{merge}} function.
+#' @return Data frame containing merged data
+#' @export
+#' 
+merge.df.list <- function(head, df.list, ...) {
+    
+    # less efficient than lapply, but easier for renaming 
+    for (l in 1:length(df.list)) {
+        head <- merge(head, df.list[[l]], suffix = c("", paste0(".", names(df.list)[l])), ...)
+    }
+    return(head)
+}
