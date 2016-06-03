@@ -78,7 +78,7 @@ fancy.date <- function(dt) {
 }
 
 
-#' Merge list of data frames
+#' Recursively merge list of data frames
 #' 
 #' Recursively merge list of data frames with a 'master data frame'
 #' @param head Data frame with which all others are to be merge (for example, a list of coordinates, to which classifications can be added)
@@ -87,11 +87,41 @@ fancy.date <- function(dt) {
 #' @return Data frame containing merged data
 #' @export
 #' 
-merge.df.list <- function(head, df.list, ...) {
+rmerge.df.list <- function(head, df.list, ...) {
     
     # less efficient than lapply, but easier for renaming 
     for (l in 1:length(df.list)) {
         head <- merge(head, df.list[[l]], suffix = c("", paste0(".", names(df.list)[l])), ...)
     }
     return(head)
+}
+
+
+#' Calculate correlation for scatterplot matrix
+#' 
+#' Calculate per-variable correlation & p-value, to be used as panel input in \code{\link{pairs}} etc.
+#' @param x First variable to compare
+#' @param y Second variable to compare
+#' @param digits number of decimal places to display
+#' @param cex.cor Scaling factor to apply to text
+#' @export
+#' @examples
+#' pairs(iris[1:4], pch = 21, bg = c("red", "green3", "blue")[unclass(iris$Species)], upper.panel = panel.cor)
+#' 
+panel.cor <- function(x, y, digits = 2, cex.cor = 1)
+{
+    usr <- par("usr"); on.exit(par(usr))
+    par(usr = c(0, 1, 0, 1))
+    # correlation coefficient
+    r <- cor(x, y)
+    txt <- format(c(r, 0.123456789), digits = digits)[1]
+    txt <- paste("r = ", txt, sep = "")
+    text(0.5, 0.6, txt, cex = cex.cor)
+    
+    # p-value calculation
+    p <- cor.test(x, y)$p.value
+    txt2 <- format(c(p, 0.123456789), digits = digits)[1]
+    txt2 <- paste("p = ", txt2, sep = "")
+    if(p<0.01) txt2 <- "p < 0.01"
+    text(0.5, 0.4, txt2, cex = cex.cor)
 }
