@@ -4,7 +4,7 @@
 \alias{panel.cor}
 \title{Calculate correlation for scatterplot matrix}
 \usage{
-panel.cor(x, y, digits = 2, cex.cor = 1)
+panel.cor(x, y, digits = 2, cex.cor = 1, ...)
 }
 \arguments{
 \item{x}{First variable to compare}

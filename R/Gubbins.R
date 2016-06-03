@@ -108,12 +108,12 @@ rmerge.df.list <- function(head, df.list, ...) {
 #' @examples
 #' pairs(iris[1:4], pch = 21, bg = c("red", "green3", "blue")[unclass(iris$Species)], upper.panel = panel.cor)
 #' 
-panel.cor <- function(x, y, digits = 2, cex.cor = 1)
+panel.cor <- function(x, y, digits = 2, cex.cor = 1, ...)
 {
     usr <- par("usr"); on.exit(par(usr))
     par(usr = c(0, 1, 0, 1))
     # correlation coefficient
-    r <- cor(x, y)
+    r <- cor(x, y, use = "complete.obs")
     txt <- format(c(r, 0.123456789), digits = digits)[1]
     txt <- paste("r = ", txt, sep = "")
     text(0.5, 0.6, txt, cex = cex.cor)
