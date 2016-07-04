@@ -125,3 +125,22 @@ panel.cor <- function(x, y, digits = 2, cex.cor = 1, ...)
     if(p<0.01) txt2 <- "p < 0.01"
     text(0.5, 0.4, txt2, cex = cex.cor)
 }
+
+
+#' Hijack a function to change default parameters
+#' 
+#' Create copy function with defaults set to something more useful
+#' @export
+#' @examples
+#' .data.frame <- hijack(data.frame, stringsAsFactors = FALSE)
+#' dat <- .data.frame(x1 = 1:3, x2 = c("a", "b", "c"))
+#' str(dat)  # yay! strings are character
+#' 
+hijack <- function (FUN, ...) {
+    .FUN <- FUN
+    args <- list(...)
+    invisible(lapply(seq_along(args), function(i) {
+        formals(.FUN)[[names(args)[i]]] <- args[[i]]
+    }))
+    .FUN
+}

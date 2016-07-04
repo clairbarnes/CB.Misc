@@ -2,6 +2,7 @@
 
 export(crop.pdf)
 export(fancy.date)
+export(hijack)
 export(install.useful.packages)
 export(panel.cor)
 export(prep.csv)
