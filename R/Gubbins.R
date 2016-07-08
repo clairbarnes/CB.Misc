@@ -146,41 +146,23 @@ hijack <- function (FUN, ...) {
 }
 
 
-#' Scale bar for image plot
+#' Get centre & radius of clumps
 #' 
-#' Draw scale bar for image plot. Taken from http://menugget.blogspot.co.uk/2011/08/adding-scale-to-image-plot.html#more
+#' Given a list of coordinates of points, identify clusters and for each, find the midpoint and spanning radius.
+#' @param px Matrix of coordinates 
 #' @export
-image.scale <- function(z, zlim, col = heat.colors(12),
-                        breaks, horiz=TRUE, ylim=NULL, xlim=NULL, ...){
-    if(!missing(breaks)){
-        if(length(breaks) != (length(col)+1)){stop("must have one more break than colour")}
-    }
-    if(missing(breaks) & !missing(zlim)){
-        breaks <- seq(zlim[1], zlim[2], length.out=(length(col)+1)) 
-    }
-    if(missing(breaks) & missing(zlim)){
-        zlim <- range(z, na.rm=TRUE)
-        zlim[2] <- zlim[2]+c(zlim[2]-zlim[1])*(1E-3)#adds a bit to the range in both directions
-        zlim[1] <- zlim[1]-c(zlim[2]-zlim[1])*(1E-3)
-        breaks <- seq(zlim[1], zlim[2], length.out=(length(col)+1))
-    }
-    poly <- vector(mode="list", length(col))
-    for(i in seq(poly)){
-        poly[[i]] <- c(breaks[i], breaks[i+1], breaks[i+1], breaks[i])
-    }
-    xaxt <- ifelse(horiz, "s", "n")
-    yaxt <- ifelse(horiz, "n", "s")
-    if(horiz){YLIM<-c(0,1); XLIM<-range(breaks)}
-    if(!horiz){YLIM<-range(breaks); XLIM<-c(0,1)}
-    if(missing(xlim)) xlim=XLIM
-    if(missing(ylim)) ylim=YLIM
-    plot(1,1,t="n",ylim=ylim, xlim=xlim, xaxt=xaxt, yaxt=yaxt, xaxs="i", yaxs="i", ...)  
-    for(i in seq(poly)){
-        if(horiz){
-            polygon(poly[[i]], c(0,0,1,1), col=col[i], border=NA)
-        }
-        if(!horiz){
-            polygon(c(0,0,1,1), poly[[i]], col=col[i], border=NA)
-        }
-    }
+#' 
+clump.centres <- function(px) {
+    
+    # clump adjacent pixels
+    cc <- clump(m2r(bpx2im(data.frame(px, type = 1), im.dim = c(2048, 2048))), dir = 4)
+    
+    # coordinates of each clump, with clump id
+    xy <- data.frame(xyFromCell(cc, which(!is.na(getValues(cc)))),
+                     id = getValues(cc)[!is.na(getValues(cc))])
+    
+    df <- ddply(xy, .(id), summarise,
+                xm = mean(x), ym = mean(y),
+                r = ceiling(max(max(x) - min(x), max(y) - min(y)) / 2))
+    df
 }

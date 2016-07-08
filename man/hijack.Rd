@@ -7,7 +7,7 @@
 hijack(FUN, ...)
 }
 \description{
-Create copy function with defaults set to something more useful
+Create copy function with defaults set to something more useful. Taken from r-bloggers somewhere
 }
 \examples{
 .data.frame <- hijack(data.frame, stringsAsFactors = FALSE)
