@@ -5,7 +5,8 @@ Authors@R: person("Clair", "Barnes", email = "clair.with.no.e@gmail.com", role =
 Description: Collection of functions that I've found useful.
 Depends:
     devtools,
-    roxygen2
+    roxygen2,
+	abind
 License: What license is it under?
 LazyData: true
-RoxygenNote: 5.0.1
+RoxygenNote: 6.0.1
