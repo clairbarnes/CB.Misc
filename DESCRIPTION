@@ -1,12 +1,15 @@
 Package: CB.Misc
-Title: Useful things
+Title: Useful functions
 Version: 0.0.0.9000
 Authors@R: person("Clair", "Barnes", email = "clair.with.no.e@gmail.com", role = c("aut", "cre"))
-Description: Collection of functions that I've found useful.
+Description: Collection of handy support functions to make everything a little easier.
 Depends:
     devtools,
     roxygen2,
-	abind
+	beepr,
+	knitr,
+	xtable
 License: What license is it under?
+Encoding: UTF-8
 LazyData: true
-RoxygenNote: 6.0.1
+RoxygenNote: 6.1.0

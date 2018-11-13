@@ -4,7 +4,7 @@
 \alias{makepdf}
 \title{Quickly produce a pdf}
 \usage{
-makepdf(fnm, plotdef, crop = T, ...)
+makepdf(fnm, plotdef, crop = T, margin = c(0, 0, 0, 0), ...)
 }
 \arguments{
 \item{fnm}{String: path & name of pdf to be created}
@@ -17,4 +17,10 @@ makepdf(fnm, plotdef, crop = T, ...)
 }
 \description{
 Quickly produce a pdf
+}
+\examples{
+makepdf("./Documents/tmp.pdf", width = 4, {
+     plot(1:100, dnorm(1:100, 50,20))
+})
+
 }
