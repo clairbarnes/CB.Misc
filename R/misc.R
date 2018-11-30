@@ -33,9 +33,12 @@ bootstrap <- function(x, nsamp = 10000, fn = mean) {
 #' @export
 #' 
 boot.sig <- function(boot.samp, target = 0, q1 = 0.025, q2 = 0.975) {
-    findInterval(0, quantile(boot.samp, c(q1, q2)))
+    findInterval(target, quantile(boot.samp, c(q1, q2)))
 }
 
+
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
+# MISCELLANEOUS USEFUL THINGS                                                                           ####
 
 #' Identify whether points fall within an ellipse
 #'
@@ -168,6 +171,7 @@ ratty.weights <- function() {
     
     rw <- read_xlsx("Ratty-weights.xlsx")
     rw$Date <- as.Date(rw$Date)
+    cat("Last update:", toString(max(rw$Date)), "\n")
     
     first.q <- as.Date(cut(min(rw$Date), "quarter"))
     next.q <- as.Date(cut(as.Date(cut(Sys.Date(), "quarter")) + 100, "quarter"))
