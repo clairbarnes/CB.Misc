@@ -4,7 +4,7 @@
 \alias{bootstrap}
 \title{Get bootstrap distribution of a statistic over a set of values}
 \usage{
-bootstrap(x, nsamp = 10000, fn = mean)
+bootstrap(x, nsamp = 10000, fn = mean, ...)
 }
 \arguments{
 \item{x}{Vector or array of values}

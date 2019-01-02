@@ -12,11 +12,11 @@
 #' 
 #' @export
 #'  
-bootstrap <- function(x, nsamp = 10000, fn = mean) {
+bootstrap <- function(x, nsamp = 10000, fn = mean, ...) {
     n <- length(c(x))
     samp <- array(sample(1:n, n * nsamp, replace = T), dim = c(n,nsamp))
     
-    apply(samp, 2, function(ind) fn(x[ind]))
+    apply(samp, 2, function(ind) fn(x[ind], ...))
 }
 
 
