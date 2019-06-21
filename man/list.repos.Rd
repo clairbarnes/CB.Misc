@@ -15,3 +15,7 @@ Vector of paths to git repositories
 \description{
 List all git repositories
 }
+\examples{
+gl <- list.repos()
+
+}

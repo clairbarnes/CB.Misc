@@ -1,44 +1,29 @@
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
-# BOOTSTRAPPING                                                                                         ####
-
-#' Get bootstrap distribution of a statistic over a set of values
-#' 
-#' @param x Vector or array of values
-#' @param nsamp Number of bootstrap samples to produce. Default is 10000.
-#' @param fn Statistic to calculate for each bootstrap sample. Default is mean.
-#' 
-#' @return nsamp-length vector of bootstrapped statistics 
-#' 
-#' @export
-#'  
-bootstrap <- function(x, nsamp = 10000, fn = mean, ...) {
-    n <- length(c(x))
-    samp <- array(sample(1:n, n * nsamp, replace = T), dim = c(n,nsamp))
-    
-    apply(samp, 2, function(ind) fn(x[ind], ...))
-}
-
-
-
-#' Check where target value falls within bootstrap sample
-#' 
-#' @param boot.samp Vector of bootstrapped statistic, as returned by \link{\code{bootstrap}}
-#' @param target Target value. Default is 0.
-#' @param q1 Lower probability bound. Default is 0.025.
-#' @param q2 Upper probability bound. Default is 0.975.
-#' 
-#' @return Value: either 0 (target in lower tail), 1 (target not significant), or 2 (target in upper tail)
-#' 
-#' @export
-#' 
-boot.sig <- function(boot.samp, target = 0, q1 = 0.025, q2 = 0.975) {
-    findInterval(target, quantile(boot.samp, c(q1, q2)))
-}
-
-
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 # MISCELLANEOUS USEFUL THINGS                                                                           ####
+
+#' Get word count from pdf
+#' 
+#' @param fnm Filename of pdf, including path
+#' 
+#' @export
+#' 
+pdf.wordcount <- function(fnm) {
+    system(paste0("pdftotext ",fnm," - | tr -d '.' | wc -w"))
+}
+
+
+
+#' Integer as 2-character string
+#'
+#' @param i Integer to be converted to 2-character string
+#'
+#' @return String of length 2
+#' @export
+#'
+ix <- function(i) {formatC(i, width = 2, flag = "0")}
+
+
 
 #' Identify whether points fall within an ellipse
 #'
@@ -241,3 +226,60 @@ ratty.weights <- function() {
     
     setwd(org.dir)
 }
+
+
+
+#' Source a block of lines from a named file
+#' 
+#' @param fnm Filename to source
+#' @param from Line to start sourcing from
+#' @param to Line to stop sourcing
+#' 
+#' @export
+#' 
+source.lines <- function(fnm, from, to) {
+    system.time({
+        file.lines <- scan(fnm, what = character(), skip = from - 1, nlines = to - from + 1, sep = "\n")
+        file.lines.collapsed <- paste(file.lines, collapse = "\n")
+        source(textConnection(file.lines.collapsed))
+    })["elapsed"]
+}
+
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
+# BOOTSTRAPPING                                                                                         ####
+
+#' Get bootstrap distribution of a statistic over a set of values
+#' 
+#' @param x Vector or array of values
+#' @param nsamp Number of bootstrap samples to produce. Default is 10000.
+#' @param fn Statistic to calculate for each bootstrap sample. Default is mean.
+#' 
+#' @return nsamp-length vector of bootstrapped statistics 
+#' 
+#' @export
+#'  
+bootstrap <- function(x, nsamp = 10000, fn = mean, ...) {
+    n <- length(c(x))
+    samp <- array(sample(1:n, n * nsamp, replace = T), dim = c(n,nsamp))
+    
+    apply(samp, 2, function(ind) fn(x[ind], ...))
+}
+
+
+
+#' Check where target value falls within bootstrap sample
+#' 
+#' @param boot.samp Vector of bootstrapped statistic, as returned by \link{\code{bootstrap}}
+#' @param target Target value. Default is 0.
+#' @param q1 Lower probability bound. Default is 0.025.
+#' @param q2 Upper probability bound. Default is 0.975.
+#' 
+#' @return Value: either 0 (target in lower tail), 1 (target not significant), or 2 (target in upper tail)
+#' 
+#' @export
+#' 
+boot.sig <- function(boot.samp, target = 0, q1 = 0.025, q2 = 0.975) {
+    findInterval(target, quantile(boot.samp, c(q1, q2)))
+}
+
+

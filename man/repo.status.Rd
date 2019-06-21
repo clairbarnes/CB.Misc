@@ -15,3 +15,7 @@ Vector of status checks
 \description{
 Check status of git repository
 }
+\examples{
+t(sapply(gl, repo.status))
+
+}
