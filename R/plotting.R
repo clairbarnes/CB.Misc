@@ -52,6 +52,33 @@ rbow <- function(n, bias = 1, rev = F) {
 }
 
 
+#' Colour palette of cool colours (designed as companion to heat.colors)
+#' 
+#' @export
+#' 
+cool.colors <- function(n, bias = 1, rev = F) {
+    
+    cols <- c("midnightblue", "dodgerblue", "aquamarine", "honeydew")
+    if(rev) cols <- rev(cols)
+    
+    crp <- colorRampPalette(cols, bias = bias)
+    crp(n)
+}
+
+
+#' Quick palette of colours from cool to warm, separated by white
+#' 
+#' @param ncool Number of colours to generate from cool.colors()
+#' @param nwarm Number of colours to generate from heat.colors()
+#' 
+#' @export
+#' 
+temp.cols <- function(ncool, nwarm) {
+    
+    c(cool.colors(ncool), "white", rev(heat.colors(nwarm)))
+}
+
+
 #' Reset parameters to original values
 #' @export
 #'

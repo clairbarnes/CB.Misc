@@ -4,7 +4,7 @@
 \alias{ix}
 \title{Integer as 2-character string}
 \usage{
-ix(i)
+ix(i, ...)
 }
 \arguments{
 \item{i}{Integer to be converted to 2-character string}

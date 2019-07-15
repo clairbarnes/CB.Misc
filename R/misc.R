@@ -21,7 +21,7 @@ pdf.wordcount <- function(fnm) {
 #' @return String of length 2
 #' @export
 #'
-ix <- function(i) {formatC(i, width = 2, flag = "0")}
+ix <- function(i, ...) {formatC(c(i, ...), width = 2, flag = "0")}
 
 
 
