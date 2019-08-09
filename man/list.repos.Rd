@@ -4,10 +4,10 @@
 \alias{list.repos}
 \title{List all git repositories}
 \usage{
-list.repos(fpath = "/home/")
+list.repos(folders = c("~/R/My-packages/", "~/PhD/"))
 }
 \arguments{
-\item{fpath}{Filepath to begin searching for git repositories. Default is /home/.}
+\item{folders}{Filepath to begin searching for git repositories. Default is c("~/R/My-packages/", "~/PhD/").}
 }
 \value{
 Vector of paths to git repositories

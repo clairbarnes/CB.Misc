@@ -9,7 +9,7 @@
 
 #' List all git repositories
 #' 
-#' @param fpath Filepath to begin searching for git repositories. Default is /home/.
+#' @param folders Filepath to begin searching for git repositories. Default is c("~/R/My-packages/", "~/PhD/").
 #' 
 #' @return Vector of paths to git repositories
 #' 
@@ -17,8 +17,12 @@
 #' @examples
 #' gl <- list.repos()
 #' 
-list.repos <- function(fpath = "/home/") {
-    gsub("/\\.git", "", gsub("/home/clair/", "~/", system(paste0("find ", fpath, " -name '.git'"), intern = T)))
+list.repos <- function(folders = c("~/R/My-packages/", "~/PhD/")) {
+    
+    repos <- c(sapply(folders, function(fpath) system(paste0("find ", fpath, " -name '.git'"), intern = T)))
+    repos <- gsub("/\\.git", "", gsub("/home/clair/", "~/", repos))
+    
+    return(t(sapply(repos, repo.status)))
 }
 
 
