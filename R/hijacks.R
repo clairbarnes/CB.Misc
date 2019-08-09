@@ -10,8 +10,7 @@
 #' @examples
 #' pairs(iris[1:4], pch = 21, bg = c("red", "green3", "blue")[unclass(iris$Species)], upper.panel = panel.cor)
 #'
-panel.cor <- function(x, y, digits = 2, cex.cor = 1, ...)
-{
+panel.cor <- function(x, y, digits = 2, cex.cor = 1, ...) {
     usr <- par("usr"); on.exit(par(usr))
     par(usr = c(0, 1, 0, 1))
     # correlation coefficient
@@ -58,4 +57,4 @@ hijack <- function (FUN, ...) {
 #'
 #' @export
 #'
-"%^%" <- function(x, n) with(eigen(x), vectors %*% (values^n * t(vectors)))
+"%^%" <- function(x, n) {with(eigen(x), vectors %*% (values^n * t(vectors)))}
