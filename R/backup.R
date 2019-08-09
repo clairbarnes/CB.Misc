@@ -38,14 +38,30 @@ repo.status <- function(repo.nm) {
     repo.nm <- gsub("\\.git", "", repo.nm)
     org.wd <- getwd()
     setwd(repo.nm)
-    
     gs <- system("git status", intern = T)
-    
     setwd(org.wd)
-    c("Up to date" = "nothing to commit, working directory clean" %in% gs,
-      "Changes to commit" = "Changes to be committed:" %in% gs,
-      "Changes not staged" = "Changes not staged for commit:" %in% gs,
-      "Untracked files" = "Untracked files:" %in% gs)
+    
+    # remove blank lines & system messages
+    gs <- gs[-grep("\\(use", gs)]
+    gs <- gs[!gs == ""]
+    
+    # count occurrences of key phrases
+    to.commit <- grep("Changes to be committed:", gs)
+    unstaged <- grep("Changes not staged for commit:", gs)
+    untracked <- grep("Untracked files:", gs)
+    
+    # count lines between key phrases
+    n.commits <- gsub(" commit.+", "", gsub(".+by ", "", 
+                                            gs[grep("Your branch is ahead of 'origin/master' by ", gs)]))
+    n.to.commit <- min(unstaged, untracked, length(gs)+1) - to.commit - 1
+    n.unstaged <- min(untracked, length(gs)+1) - unstaged - 1
+    n.untracked <- length(gs) - untracked
+    
+    # return counts
+    return(c("Pending commits" =  max(as.integer(n.commits), 0),
+             "Changes to commit" = max(n.to.commit, 0),
+             "Unstaged changes" = max(n.unstaged, 0),
+             "Untracked files" = max(n.untracked, 0)))
 }
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
