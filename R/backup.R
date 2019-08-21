@@ -23,11 +23,15 @@ list.repos <- function(folders = c("~/R/My-packages/", "~/PhD/"), all = F) {
     repos <- setNames(gsub("/\\.git", "", gsub("/home/clair/", "~/", repos)), NULL)
     
     repo.details <- t(sapply(repos, repo.status))
-    
+
     if(all) {
         return(repo.details)
     } else {
-        return(repo.details[rowSums(repo.details) > 0,])
+        if(sum(rowSums(repo.details) > 0) == 0) {
+            cat("No repositories pending update \n")
+        } else {
+            return(repo.details[rowSums(repo.details) > 0,,drop = F])
+        }
     }
 }
 
