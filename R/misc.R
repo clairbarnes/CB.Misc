@@ -14,6 +14,29 @@ pdf.wordcount <- function(fnm) {
 
 
 
+#' Convert a pdf to greyscale
+#' 
+#' @param fnm.in Filename of pdf to convert to greyscale, including path
+#' @param fnm.out Filename of converted pdf, including path. If not supplied, will simply append '-GS' to the input filename.
+#' @param open Boolean: open the converted pdf? Default is N.
+#' 
+#' @export
+#' 
+greyscale <- function(fnm.in, fnm.out = gsub("\\.pdf", "-GS.pdf", fnm.in), open = F) {
+    
+    system2("gs", args = c(paste0("-sOutputFile=",fnm.out), 
+                           "-sDEVICE=pdfwrite",
+                           "-sColorConversionStrategy=Gray",
+                           "-dProcessColorModel=/DeviceGray",
+                           "-dCompatibiltyLevel=1.4",
+                           "-dNOPAUSE",
+                           "-dBATCH",
+                           fnm.in))
+    if(open) system2("evince", args = fnm.out, wait = F)
+}
+
+
+
 #' Integer as 2-character string
 #'
 #' @param i Integer to be converted to 2-character string
@@ -95,47 +118,6 @@ chk <- function(o1, o2, dp = 9) {
   all(round(c(o1), dp) == round(c(o2), dp))
 }
 
-
-
-#' Parameters of mixture of Gaussian distributions
-#' 
-#' @export
-#' 
-mixt.pars <- function(mu.list, sig.list, weights) {
-    
-    M <- length(mu.list)
-    if(missing(weights)) weights <- rep(1/M, M)
-    
-    mu.bar <- colSums(sweep(abind(mu.list, along = 0), 1, weights, "*"))
-    
-    E.var <- apply(sweep(abind(sig.list, along = 0), 1, weights, "*"), 2:3, sum)
-    V.exp <- apply(sweep(aaply(sweep(abind(mu.list, along = 0), 2, mu.bar, "-"), 1,
-                               function(mu.diff) mu.diff %*% t(mu.diff)), 1, weights, "*"), 2:3, sum)
-    return(list("mean" = mu.bar, "var" = E.var + V.exp))
-} 
-
-
-
-
-#' Gamma parameters given specified mean/mode and variance
-#' 
-#' @param mean Mean of Gamma distribution. Only used if mode is not provided.
-#' @param mode Mode of Gamma distribution.
-#' @param var Variance of Gamma distribution.
-#' 
-#' @return List containing shape and rate parameters.
-#' 
-#' @export
-#' 
-gamm.pars <- function(mode, var, mean) {
-    
-    if(!missing(mode)) {
-        r <- (mode + sqrt(mode^2 + 4*var)) / (2 * var)
-        return(list("shape" = 1 + (mode * r), "rate" = r))
-    } else {
-        return(list("shape" = mean^2 / var, "rate" = mean/var))
-    }
-}
 
 
 #' Update ratty weight graphs with latest data in Google Sheets
@@ -244,6 +226,82 @@ source.lines <- function(fnm, from, to) {
         source(textConnection(file.lines.collapsed))
     })["elapsed"]
 }
+
+
+
+#' Clear environment, except for selected objects
+#' 
+#' @param keep Vector of names of objects to keep
+#' 
+#' @export
+#' 
+tidyup <- function(keep = "") {
+    if(class(keep) != "character") {
+        cat("Non-string argument \n")
+    } else {
+        rm(list = ls(envir = .GlobalEnv)[!ls(envir = .GlobalEnv) %in% keep], envir = .GlobalEnv)
+    }
+}
+
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
+# MISCELLANEOUS STATS-Y THINGS                                                                          ####
+
+
+#' Parameters of mixture of Gaussian distributions
+#' 
+#' @export
+#' 
+mixt.pars <- function(mu.list, sig.list, weights) {
+    
+    M <- length(mu.list)
+    if(missing(weights)) weights <- rep(1/M, M)
+    
+    mu.bar <- colSums(sweep(abind(mu.list, along = 0), 1, weights, "*"))
+    
+    E.var <- apply(sweep(abind(sig.list, along = 0), 1, weights, "*"), 2:3, sum)
+    V.exp <- apply(sweep(aaply(sweep(abind(mu.list, along = 0), 2, mu.bar, "-"), 1,
+                               function(mu.diff) mu.diff %*% t(mu.diff)), 1, weights, "*"), 2:3, sum)
+    return(list("mean" = mu.bar, "var" = E.var + V.exp))
+} 
+
+
+
+
+#' Return mode of x
+#' 
+#' @param x Vector or matrix of values - assumed to be unimodal
+#' 
+#' @return Value of (single) mode of x
+#' 
+#' @export
+#' 
+unimode <- function(x) {
+    dns <- density(x)
+    dns$x[which.max(dns$y)]
+}
+
+
+#' Gamma parameters given specified mean/mode and variance
+#' 
+#' @param mean Mean of Gamma distribution. Only used if mode is not provided.
+#' @param mode Mode of Gamma distribution.
+#' @param var Variance of Gamma distribution.
+#' 
+#' @return List containing shape and rate parameters.
+#' 
+#' @export
+#' 
+gamm.pars <- function(mode, var, mean) {
+    
+    if(!missing(mode)) {
+        r <- (mode + sqrt(mode^2 + 4*var)) / (2 * var)
+        return(list("shape" = 1 + (mode * r), "rate" = r))
+    } else {
+        return(list("shape" = mean^2 / var, "rate" = mean/var))
+    }
+}
+
+
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 # BOOTSTRAPPING                                                                                         ####
