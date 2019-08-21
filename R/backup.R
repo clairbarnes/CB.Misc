@@ -19,8 +19,8 @@
 #' 
 list.repos <- function(folders = c("~/R/My-packages/", "~/PhD/"), all = F) {
     
-    repos <- c(sapply(folders, function(fpath) system(paste0("find ", fpath, " -name '.git'"), intern = T)))
-    repos <- gsub("/\\.git", "", gsub("/home/clair/", "~/", repos))
+    repos <- c(unlist(sapply(folders, function(fpath) system(paste0("find ", fpath, " -name '.git'"), intern = T))))
+    repos <- setNames(gsub("/\\.git", "", gsub("/home/clair/", "~/", repos)), NULL)
     
     repo.details <- t(sapply(repos, repo.status))
     
