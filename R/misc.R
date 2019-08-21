@@ -24,6 +24,9 @@ pdf.wordcount <- function(fnm) {
 #' 
 greyscale <- function(fnm.in, fnm.out = gsub("\\.pdf", "-GS.pdf", fnm.in), open = F) {
     
+    fnm.in <- paste0(gsub("\\.pdf","",gsub("~/", "/home/clair/", fnm.in)), ".pdf")
+    fnm.out <- paste0(gsub("\\.pdf","",gsub("~/", "/home/clair/", fnm.out)), ".pdf")
+    
     system2("gs", args = c(paste0("-sOutputFile=",fnm.out), 
                            "-sDEVICE=pdfwrite",
                            "-sColorConversionStrategy=Gray",
