@@ -17,12 +17,18 @@
 #' @examples
 #' gl <- list.repos()
 #' 
-list.repos <- function(folders = c("~/R/My-packages/", "~/PhD/")) {
+list.repos <- function(folders = c("~/R/My-packages/", "~/PhD/"), all = F) {
     
     repos <- c(sapply(folders, function(fpath) system(paste0("find ", fpath, " -name '.git'"), intern = T)))
     repos <- gsub("/\\.git", "", gsub("/home/clair/", "~/", repos))
     
-    return(t(sapply(repos, repo.status)))
+    repo.details <- t(sapply(repos, repo.status))
+    
+    if(all) {
+        return(repo.details)
+    } else {
+        return(repo.details[rowSums(repo.details) > 0,])
+    }
 }
 
 
