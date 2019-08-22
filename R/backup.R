@@ -36,6 +36,21 @@ list.repos <- function(folders = c("~/R/My-packages/", "~/PhD/"), all = F) {
 }
 
 
+
+#' List all currently tracked files in repository
+#' 
+#' @export
+tracked.files <- function() {
+    if(file.exists(".git")) {
+        system2("git", args = c("ls-tree", "-r master", "--name-only"))
+    } else {
+        cat("Not a git repository")
+    }
+}
+
+
+
+
 #' Check status of git repository
 #' 
 #' @param repo.nm File path to git repository
