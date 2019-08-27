@@ -2,6 +2,7 @@
 
 export("%^%")
 export(add.margin)
+export(bib.dropdown)
 export(boot.sig)
 export(bootstrap)
 export(change.wallpaper)

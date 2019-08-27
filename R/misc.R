@@ -344,3 +344,27 @@ boot.sig <- function(boot.samp, target = 0, q1 = 0.025, q2 = 0.975) {
 }
 
 
+
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
+# MISCELLANEOUS THINGS THAT MAY TURN OUT TO BE ONE-OFFS                                                 ####
+
+
+#' List selector options from bib file, in alphabetical order
+#' 
+#' @details eg. to extract all keywords stored in the 'manager' menu for easier revision
+#' @param fnm Filename of .bib file (including path). Default is ~/PhD/References/Master-refs.bib
+#' @param field Field to interrogate: default is 'keywords'
+#' 
+#' @return Vector of sorted keywords
+#' @export
+#' 
+#' @examples
+#' kw <- bib.dropdown("~/PhD/References/Master-refs.bib")
+#' paste(kw, collapse = ";")
+#' 
+bib.dropdown <- function(fnm = "~/PhD/References/Master-refs.bib", field = "keywords") {
+    sort(strsplit(gsub("}.+", "", 
+                   gsub(paste0(".+selector_", field,":"),"", 
+                        readr::read_file(fnm)))
+              , ";")[[1]])
+}
