@@ -17,7 +17,7 @@
 #' @examples
 #' gl <- list.repos()
 #' 
-list.repos <- function(folders = c("~/R/My-packages/", "~/PhD/"), all = F) {
+list.repos <- function(folders = c("~/R/My-packages/", "~/PhD/", "~/texmf/"), all = F) {
     
     repos <- c(unlist(sapply(folders, function(fpath) system(paste0("find ", fpath, " -name '.git'"), intern = T))))
     repos <- setNames(gsub("/\\.git", "", gsub("/home/clair/", "~/", repos)), NULL)

@@ -4,7 +4,8 @@
 \alias{list.repos}
 \title{List all git repositories}
 \usage{
-list.repos(folders = c("~/R/My-packages/", "~/PhD/"), all = F)
+list.repos(folders = c("~/R/My-packages/", "~/PhD/", "~/texmf/"),
+  all = F)
 }
 \arguments{
 \item{folders}{Filepath to begin searching for git repositories. Default is c("~/R/My-packages/", "~/PhD/").}
