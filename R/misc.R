@@ -151,7 +151,7 @@ ratty.weights <- function() {
     invisible(sapply(colnames(rw.imp[,2:(ncol(rw)-1)]), function(r) {
         w <- unlist(rw.imp[,r])
         w.min <- min(which(!is.na(w))); w.max <- max(which(!is.na(w)))
-        rw.imp[w.min:w.max,r] <<- na.interpolation(w[w.min:w.max])
+        rw.imp[w.min:w.max,r] <<- na_interpolation(w[w.min:w.max])
     }))
     
     # plot weights with interpolation
@@ -177,7 +177,7 @@ ratty.weights <- function() {
     invisible(sapply(colnames(age.spl[-1]), function(r) {
         w <- unlist(age.spl[,r])
         w.min <- min(which(!is.na(w))); w.max <- max(which(!is.na(w)))
-        age.spl[w.min:w.max,r] <<- na.interpolation(w[w.min:w.max])
+        age.spl[w.min:w.max,r] <<- na_interpolation(w[w.min:w.max])
     }))
     
     # TBC - upload images to google drive
