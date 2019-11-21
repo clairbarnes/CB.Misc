@@ -40,6 +40,37 @@ greyscale <- function(fnm.in, fnm.out = gsub("\\.pdf", "-GS.pdf", fnm.in), open 
 
 
 
+#' Remove LaTeX production files (.aux, .log etc)
+#' 
+#' @param fpath File path to clear files from 
+#' 
+#' @export
+#' 
+clean.tex <- function(fpath) {
+    fl <- list.files(fpath, full.names = T)
+    
+    rm.ext <- c("log", "gz", "bbl", "aux", "blg", "ent", "toc", "concordance.tex")
+    
+    fl.ext <- rowSums(sapply(rm.ext, function(ext) grepl(ext, fl)))
+    to.clear <- fl[fl.ext == 1]
+    sapply(to.clear, file.remove)
+}
+
+
+
+#' Update all old R packages
+#' 
+#' @export
+#' 
+update.all <- function() {
+    sapply(rownames(old.packages()), install.packages)
+}
+
+
+
+
+
+
 #' Integer as 2-character string
 #'
 #' @param i Integer to be converted to 2-character string

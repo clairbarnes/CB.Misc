@@ -4,8 +4,7 @@
 \alias{greyscale}
 \title{Convert a pdf to greyscale}
 \usage{
-greyscale(fnm.in, fnm.out = gsub("\\\\.pdf", "-GS.pdf", fnm.in),
-  open = F)
+greyscale(fnm.in, fnm.out = gsub("\\\\.pdf", "-GS.pdf", fnm.in), open = F)
 }
 \arguments{
 \item{fnm.in}{Filename of pdf to convert to greyscale, including path}
