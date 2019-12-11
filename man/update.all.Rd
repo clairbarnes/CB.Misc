@@ -4,7 +4,7 @@
 \alias{update.all}
 \title{Update all old R packages}
 \usage{
-\method{update}{all}()
+update.all()
 }
 \description{
 Update all old R packages

@@ -149,7 +149,11 @@ matcheck <- function(expr1, expr2, dp = 12, seed = 1) {
 #'
 #' @export
 chk <- function(o1, o2, dp = 9) {
-  all(round(c(o1), dp) == round(c(o2), dp))
+    if(class(o1[1]) == "numeric") {
+        all(round(c(o1), dp) == round(c(o2), dp))
+    } else {
+        all(c(unlist(o1)) == c(unlist(o2)))
+    }
 }
 
 
