@@ -216,7 +216,8 @@ ratty.weights <- function() {
     }))
     
     # TBC - upload images to google drive
-    r.cols <- c("navyblue", "blue2", "tomato", "red3", "chartreuse3", "forestgreen")
+    r.cols <- c("navyblue", "blue2", "tomato", "red3", "chartreuse3", "forestgreen",
+                "maroon4", "violetred")
     
     pdf("./wplot.pdf"); {
         matplot(rw.imp$Date, rw.imp[,2:(ncol(rw)-1)], type = "o", lty = 1, xaxt = "n",  pch = 20, cex = 0.5,
@@ -224,7 +225,7 @@ ratty.weights <- function() {
         matplot(rw$Date, rw[,2:(ncol(rw)-1)], type = "o", lty = 1, pch = 20, cex = 0.5, col = r.cols, add = T)
         axis.Date(1, at=seq(first.q, next.q, by="3 mon"), format="%b-%y")
         abline(h = 0:7*100, v = seq(first.q, next.q, by="1 mon"), col = transp("grey"))
-        legend("bottom", legend = colnames(rw)[2:(ncol(rw)-1)], col = r.cols, lty = 1, pch = 20, pt.cex = 0.5,
+        legend("bottomleft", legend = colnames(rw)[2:(ncol(rw)-1)], col = r.cols, lty = 1, pch = 20, pt.cex = 0.5,
                bg = "white")
     }; dev.off()
     
