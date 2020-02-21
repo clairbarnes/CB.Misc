@@ -69,6 +69,17 @@ update.all <- function() {
 
 
 
+#' Refresh references list
+#' 
+#' @export
+#' 
+refresh.refs <- function() {
+    zz <- system("~/PhD/References/.ref-tree/compile-refs.sh", intern = T)
+    invisible(file.copy(from = "~/PhD/References/.ref-tree/ref-tree.pdf",
+                        to = "~/PhD/References/ref-list.pdf", overwrite = T))
+}
+
+
 
 
 #' Integer as 2-character string
