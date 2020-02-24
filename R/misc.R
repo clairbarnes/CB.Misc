@@ -73,10 +73,8 @@ update.all <- function() {
 #' 
 #' @export
 #' 
-refresh.refs <- function() {
-    zz <- system("~/PhD/References/.ref-tree/compile-refs.sh", intern = T)
-    invisible(file.copy(from = "~/PhD/References/.ref-tree/ref-tree.pdf",
-                        to = "~/PhD/References/ref-list.pdf", overwrite = T))
+ref.list <- function() {
+    file.edit("~/PhD/References/.ref-tree/ref-tree.rnw")
 }
 
 
