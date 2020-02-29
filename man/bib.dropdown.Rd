@@ -4,7 +4,12 @@
 \alias{bib.dropdown}
 \title{List selector options from bib file, in alphabetical order}
 \usage{
-bib.dropdown(fnm = "~/PhD/References/Master-refs.bib", field = "keywords")
+bib.dropdown(
+  fnm = "~/texmf/bibtex/bib/master-refs.bib",
+  field = "keywords",
+  add = NA,
+  string.out = F
+)
 }
 \arguments{
 \item{fnm}{Filename of .bib file (including path). Default is ~/PhD/References/Master-refs.bib}

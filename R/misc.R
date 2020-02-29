@@ -407,9 +407,18 @@ boot.sig <- function(boot.samp, target = 0, q1 = 0.025, q2 = 0.975) {
 #' kw <- bib.dropdown("~/PhD/References/Master-refs.bib")
 #' paste(kw, collapse = ";")
 #' 
-bib.dropdown <- function(fnm = "~/PhD/References/Master-refs.bib", field = "keywords") {
-    sort(strsplit(gsub("}.+", "", 
+bib.dropdown <- function(fnm = "~/texmf/bibtex/bib/master-refs.bib",
+                         field = "keywords", add = NA, string.out = F) {
+    dd <- sort(strsplit(gsub("}.+", "", 
                    gsub(paste0(".+selector_", field,":"),"", 
                         readr::read_file(fnm)))
               , ";")[[1]])
+    
+    if(!is.na(add)) dd <- sort(unique(c(dd, add)))
+    if(string.out) {
+        return(paste(dd, collapse = ";"))
+    } else {
+        return(dd)
+    }
 }
+
