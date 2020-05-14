@@ -20,7 +20,7 @@ makepdf <- function(fnm, plotdef, crop = T, margin = c(0,0,0,0), ...) {
     plotdef
     dev.off()
 
-    if(crop) system2("pdfcrop", c(fnm, fnm), invisible = T)
+    if(crop) system2("pdfcrop", c(fnm, fnm))
     add.margin(fnm, margin)
 }
 
