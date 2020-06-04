@@ -103,6 +103,21 @@ test.colramp <- function(mycolramp, n = 100) {
 
 
 
+#' Plot pch symbols
+#' 
+#' @export
+#' 
+pch <- function() {
+    plot(rep(1:5,5), rep(5:1, each = 5), pch = 1:25, xlab = "", ylab = "", bty = "n", xaxt = "n", yaxt = "n",
+         ylim = c(0,5), xlim = c(0,5), bg = "red")
+    text(rep(1:5,5), rep(5:1, each = 5), 1:25, pos = 1, cex = 0.8)
+    points(0,5,pch = 0); text(0,5,0,pos = 1, cex = 0.8)
+}
+
+
+
+
+
 #' Filled band between two lines
 #'
 #' @param x Vector of x values for plotting
