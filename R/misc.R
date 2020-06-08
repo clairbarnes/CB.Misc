@@ -173,7 +173,7 @@ chk <- function(o1, o2, dp = 9) {
 #' 
 ratty.weights <- function() {
     
-    library(googledrive); library(tidyverse); library(httpuv); library(imputeTS); library(readxl)
+    library(googledrive); library(httpuv); library(readxl)
     
     org.dir <- getwd()
     setwd("~/Documents/Ratties")
@@ -190,64 +190,43 @@ ratty.weights <- function() {
     first.q <- as.Date(cut(min(rw$Date), "quarter"))
     next.q <- as.Date(cut(as.Date(cut(Sys.Date(), "quarter")) + 100, "quarter"))
     
-    # interpolate missing data
-    rw.imp <- rw
-    invisible(sapply(colnames(rw.imp[,2:(ncol(rw)-1)]), function(r) {
-        w <- unlist(rw.imp[,r])
-        w.min <- min(which(!is.na(w))); w.max <- max(which(!is.na(w)))
-        rw.imp[w.min:w.max,r] <<- na_interpolation(w[w.min:w.max])
-    }))
-    
-    # plot weights with interpolation
-    #matplot(rw$Date, rw.imp[,2:(ncol(rw.imp)-1)], type = "l", lty = 2, xaxt = "n",
-    #        xlab = "Date", ylab = "Weight (g)", las = 2)
-    #axis.Date(1, at=seq(first.q, next.q, by="3 mon"), format="%b-%y")
-    #abline(h = 0:7*100, v = seq(first.q, next.q, by="1 mon"), col = transp("grey"))
-    #matplot(rw$Date, rw[,2:(ncol(rw.imp)-1)], type = "o", lty = 1, pch = 20, cex = 0.5, add = T)
-    
-    
-    # convert dates to ages
-    rw.age <- sapply(colnames(rw[,2:(ncol(rw)-1)]), function(r) {
-        
-        # get weights during lifespan
-        w <- rw[,c("Date", r)]
-        w <- w[min(which(!is.na(w[,2]))) : max(which(!is.na(w[,2]))),]
-        
-        return(data.frame("Age" = as.integer(w$Date - min(w$Date)), w[,2]))
-    }, simplify = F) %>% reduce(full_join, by = "Age")
-    rw.age <- rw.age[order(rw.age$Age),]
-    
-    age.spl <- rw.age
-    invisible(sapply(colnames(age.spl[-1]), function(r) {
-        w <- unlist(age.spl[,r])
-        w.min <- min(which(!is.na(w))); w.max <- max(which(!is.na(w)))
-        age.spl[w.min:w.max,r] <<- na_interpolation(w[w.min:w.max])
-    }))
-    
-    # TBC - upload images to google drive
     r.cols <- c("navyblue", "blue2", "tomato", "red3", "chartreuse3", "forestgreen",
                 "maroon4", "violetred")
     
+    # plot by date
     pdf("./wplot.pdf"); {
-        matplot(rw.imp$Date, rw.imp[,2:(ncol(rw)-1)], type = "o", lty = 1, xaxt = "n",  pch = 20, cex = 0.5,
-                xlab = "Date", ylab = "Weight (g)", las = 2, col = transp(r.cols, 0.3))
-        matplot(rw$Date, rw[,2:(ncol(rw)-1)], type = "o", lty = 1, pch = 20, cex = 0.5, col = r.cols, add = T)
-        axis.Date(1, at=seq(first.q, next.q, by="3 mon"), format="%b-%y")
-        abline(h = 0:7*100, v = seq(first.q, next.q, by="1 mon"), col = transp("grey"))
-        legend("bottomleft", legend = colnames(rw)[2:(ncol(rw)-1)], col = r.cols, lty = 1, pch = 20, pt.cex = 0.5,
-               bg = "white")
+        plot(rw$Date, rw$Monty, type = "n", xlab = "Date", ylab = "Weight (g)")
+        abline(h = 0:7 * 100, v = seq(first.q, next.q, by = "1 mon"), 
+               col = transp("grey"))
+        abline(v = seq(first.q, next.q, by = "3 mon"), col = transp("dimgrey"))
+        invisible(sapply(2:(ncol(rw) - 1), function(i) {
+            ww <- rw[!is.na(rw[,i]),c(1, i)]
+            lines(ww, type = "o", pch = 20, col = r.cols[i-1], cex = 0.5)
+        }))
+        legend("bottomleft", legend = colnames(rw)[2:(ncol(rw) - 1)], col = r.cols, 
+               lty = 1, pch = 20, pt.cex = 0.5, 
+               bg = "white") 
     }; dev.off()
     
+    ra <- sapply(colnames(rw)[2:(ncol(rw) - 1)], function(rn) {
+        wa <- rw[!is.na(rw[,rn]),c("Date", rn)]
+        wa$age <- wa$Date - min(wa$Date)
+        wa[,c(3,2)]
+    }, simplify = F)
+    
+    amx <- which.max(sapply(ra, function(df) max(df$age)))
+    
     pdf("./aplot.pdf"); {
-        matplot(age.spl$Age, age.spl[,-1], type = "l", lty = 1, pch = 4, cex = 0.5, xlab = "Age (~months)",
-                ylab = "Weight (g)", xaxt = "n", las = 2, col = transp(r.cols, 0.3))
-        matplot(rw.age$Age, rw.age[,-1], type = "o", lty = 1, pch = 20, cex = 0.5, add = T, col = r.cols)
-        abline(h = (0:7) * 100, v = seq(0:36)*30, col = transp("grey"), lty = 1)
-        abline(v =  seq(0, 36, 12)*30, col = transp("dimgrey"), lty = 2)
-        axis(1, at = seq(0,max(rw.age$Age) + 90,90), label = seq(0,max(rw.age$Age) + 90,90) / 30)
-        
-        legend("bottomright", legend = colnames(rw)[2:(ncol(rw)-1)], col = r.cols, lty = 1, pch = 20, pt.cex = 0.5,
-               bg = "white")
+    plot(ra[[amx]], ylim = c(0,700), type = "n", xlab = "Age (months)", ylab = "Weight (g)", xaxt = "n")
+    invisible(sapply(1:length(ra), function(i) {
+        lines(ra[[i]], type = "o", pch = 20, cex = 0.5, col = r.cols[i])
+    }))
+    abline(h = (0:7) * 100, v = seq(0:36)*30, col = transp("grey"), lty = 1)
+    abline(v =  seq(0, 36, 12)*30, col = transp("dimgrey"), lty = 1)
+    axis(1, at = seq(0,as.numeric(max(ra[[amx]]$age)) + 90,90),
+         label = seq(0,as.numeric(max(ra[[amx]]$age)) + 90,90) / 30)
+    legend("bottomright", legend = colnames(rw)[2:(ncol(rw)-1)], col = r.cols, 
+           lty = 1, pch = 20, pt.cex = 0.5, bg = "white")
     }; dev.off()
     
     # upload plots to Google drive
