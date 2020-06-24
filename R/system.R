@@ -19,7 +19,7 @@ change.wallpaper <- function() {
 
 #' Compare music on laptop with music on phone, list any missing tracks
 #' 
-#' @ export
+#' @export
 #' 
 new.songs.to.add.to.phone <- function() {
     
