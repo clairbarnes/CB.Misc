@@ -117,6 +117,19 @@ px.in.ellipse <- function(px, mu, Sigma, p = 0.95) {
 
 
 
+#' Identify nearest city to click
+#' 
+#' @export
+#'
+nearest.city <- function(min.size = 0) {
+  require(maps); require(raster)
+  xy <- raster::click()
+  
+  wc <- world.cities[world.cities$pop > min.size,]
+  wc[which.min(apply(sweep(wc[,c("long", "lat")], 2, xy, "-")^2, 1, sum)),]
+}
+
+
 #' Check matrix equivalence
 #'
 #' Confirm whether two matrix equations produce identical output
