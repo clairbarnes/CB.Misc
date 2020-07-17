@@ -58,3 +58,34 @@ hijack <- function (FUN, ...) {
 #' @export
 #'
 "%^%" <- function(x, n) {with(eigen(x), vectors %*% (values^n * t(vectors)))}
+
+
+
+#' Randomly generate a single sample from an inverse-Wishart distribution (robust)
+#' 
+#' @param S Symmetric, positive-semidefinite scale matrix (may be rank deficient)
+#' @param nu Scalar degrees of freedom
+#' 
+#' @export
+#' 
+r.invwishart <- function(nu, S) {
+    return(chol2inv(rwishartc(nu, chol2inv(suppressWarnings(chol(S, pivot = T))))))
+}
+
+
+
+#' Randomly generate a single sample from a normal-inverse-Wishart distribution (robust)
+#' 
+#' @param mu0 Mean vector
+#' @param lambda Positive scalar used to obtain V(mu) = Sigma/lambda
+#' @param S Symmetric, positive-semidefinite scale matrix (may be rank deficient)
+#' @param nu Scalar degrees of freedom
+#' 
+#' @export
+#' 
+r.norminvwishart <- function(mu0, lambda, S, nu) {
+    Sigma <- r.invwishart(nu, S)
+    mu <- rmvn(1, mu0, 1/lambda * Sigma)
+    return(list(mu = mu, Sigma = Sigma))
+}
+
