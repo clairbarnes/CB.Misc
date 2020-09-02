@@ -180,6 +180,7 @@ chk <- function(o1, o2, dp = 9) {
 
 
 
+
 #' Update ratty weight graphs with latest data in Google Sheets
 #' 
 #' @export
