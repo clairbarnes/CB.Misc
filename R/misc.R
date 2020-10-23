@@ -172,9 +172,9 @@ matcheck <- function(expr1, expr2, dp = 12, seed = 1) {
 #' @export
 chk <- function(o1, o2, dp = 9) {
     if(class(o1[1]) == "numeric") {
-        res <- all(round(c(o1), dp) == round(c(o2), dp))
+        res <- all(round(c(o1), dp) == round(c(o2), dp), na.rm = T)
         if(res) return(res) else {
-           dp.chk <- sapply(1:9, function(i) all(round(c(o1), i) == round(c(o2), i)))
+           dp.chk <- sapply(1:9, function(i) all(round(c(o1), i) == round(c(o2), i), na.rm = T))
            if(sum(dp.chk) > 0) {
                cat("Matches to", max(which(dp.chk)), "dp", "\n")
                 return(T)
@@ -182,7 +182,7 @@ chk <- function(o1, o2, dp = 9) {
            return(res)
         }
     } else {
-        all(c(unlist(o1)) == c(unlist(o2)))
+        all(c(unlist(o1)) == c(unlist(o2)), na.rm = T)
     }
 }
 
