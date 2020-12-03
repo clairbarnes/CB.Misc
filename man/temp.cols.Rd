@@ -4,7 +4,7 @@
 \alias{temp.cols}
 \title{Quick palette of colours from cool to warm, separated by white}
 \usage{
-temp.cols(ncool, nwarm)
+temp.cols(ncool, nwarm, mid.col = "white")
 }
 \arguments{
 \item{ncool}{Number of colours to generate from cool.colors()}

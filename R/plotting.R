@@ -73,9 +73,10 @@ cool.colors <- function(n, bias = 1, rev = F) {
 #' 
 #' @export
 #' 
-temp.cols <- function(ncool, nwarm) {
+temp.cols <- function(ncool, nwarm, mid.col = "white") {
     
-    c(cool.colors(ncool), "white", rev(heat.colors(nwarm)))
+    cv <- c(cool.colors(ncool), mid.col, rev(heat.colors(nwarm)))
+    cv[!is.na(cv)]
 }
 
 
