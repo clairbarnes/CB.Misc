@@ -4,7 +4,7 @@
 \alias{filled.band}
 \title{Filled band between two lines}
 \usage{
-filled.band(x, y.max, y.min, col)
+filled.band(x, y.max, y.min, col, border = NA, ...)
 }
 \arguments{
 \item{x}{Vector of x values for plotting}

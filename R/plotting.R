@@ -128,8 +128,8 @@ pch <- function() {
 #'
 #' @export
 #'
-filled.band <- function(x, y.max, y.min, col) {
-  polygon(c(x, rev(x)), c(y.max, rev(y.min)), col = col, border = NA)
+filled.band <- function(x, y.max, y.min, col, border = NA, ...) {
+  polygon(c(x, rev(x)), c(y.max, rev(y.min)), col = col, border = border, ...)
 }
 
 
