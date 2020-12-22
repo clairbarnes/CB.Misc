@@ -292,6 +292,18 @@ tidyup <- function(keep = "") {
     }
 }
 
+
+
+
+#' Get country name from country code
+#' 
+#' @export
+#' 
+ccd <- function(ccd) {
+    library(maps)
+    iso3166[iso3166$a2 == ccd,]
+}
+
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 # MISCELLANEOUS STATS-Y THINGS                                                                          ####
 
