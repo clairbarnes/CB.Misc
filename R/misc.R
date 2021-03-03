@@ -213,7 +213,7 @@ ratty.weights <- function() {
     next.q <- as.Date(cut(as.Date(cut(Sys.Date(), "quarter")) + 100, "quarter"))
     
     r.cols <- c("navyblue", "blue2", "tomato", "red3", "chartreuse3", "forestgreen",
-                "maroon4", "violetred")
+                "maroon4", "violetred", "cyan3", "aquamarine3", "turquoise3")
     
     # plot by date
     pdf("./wplot.pdf"); {
@@ -227,7 +227,7 @@ ratty.weights <- function() {
         }))
         legend("bottomleft", legend = colnames(rw)[2:(ncol(rw) - 1)], col = r.cols, 
                lty = 1, pch = 20, pt.cex = 0.5, 
-               bg = "white") 
+               bg = "white", ncol = 2, cex = 0.8) 
     }; dev.off()
     
     ra <- sapply(colnames(rw)[2:(ncol(rw) - 1)], function(rn) {
@@ -248,7 +248,7 @@ ratty.weights <- function() {
     axis(1, at = seq(0,as.numeric(max(ra[[amx]]$age)) + 90,90),
          label = seq(0,as.numeric(max(ra[[amx]]$age)) + 90,90) / 30)
     legend("bottomright", legend = colnames(rw)[2:(ncol(rw)-1)], col = r.cols, 
-           lty = 1, pch = 20, pt.cex = 0.5, bg = "white")
+           lty = 1, pch = 20, pt.cex = 0.5, bg = "white", ncol = 2, cex = 0.8)
     }; dev.off()
     
     # upload plots to Google drive
