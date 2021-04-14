@@ -197,3 +197,10 @@ add.margin <- function(fnm, margins = c(10,10,10,10)) {
 }
 
 
+#' Boxplot with less annoying defaults
+#' 
+#' @export
+#' 
+.boxplot <- function(x, cex = 0.4, main = "", xlab = "", ylab = "", ...) {
+  boxplot(x, pch = 20, cex = cex, lty = 1, xlab = xlab, ylab = ylab, main = main, col = NA, ...)
+}

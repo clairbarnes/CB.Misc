@@ -1,4 +1,30 @@
 
+
+#' Identify maximum value
+#' 
+#' Replaces base function with possibility to return indices
+#' 
+#' @param x Vector or array of values to compare
+#' @param ... Additional arguments to pass to which()
+#' 
+#' @export
+#' 
+whichmax <- function(x, na.rm = T, arr.ind = T, ...) which(x == max(x, na.rm = na.rm), arr.ind = arr.ind, ...)
+
+
+#' Identify minimum value
+#' 
+#' Replaces base function with possibility to return indices
+#' 
+#' @param x Vector or array of values to compare
+#' @param ... Additional arguments to pass to which()
+#' 
+#' @export
+#' 
+whichmin <- function(x, na.rm = T, arr.ind = T, ...) which(x == min(x, na.rm = na.rm), arr.ind = arr.ind, ...)
+
+
+
 #' Calculate correlation for scatterplot matrix
 #'
 #' Calculate per-variable correlation & p-value, to be used as panel input in \code{\link{pairs}} etc.
