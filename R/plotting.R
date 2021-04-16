@@ -201,6 +201,10 @@ add.margin <- function(fnm, margins = c(10,10,10,10)) {
 #' 
 #' @export
 #' 
-.boxplot <- function(x, cex = 0.4, main = "", xlab = "", ylab = "", ...) {
+.boxplot <- function(x, cex = 0.4, main = "", xlab = "", ylab = "", hline = NA, ...) {
   boxplot(x, pch = 20, cex = cex, lty = 1, xlab = xlab, ylab = ylab, main = main, col = NA, ...)
+  if (!is.na(hline)) {
+    abline(h = hline, lty = "22")
+    boxplot(x, pch = 20, cex = cex, lty = 1, xaxt = "n", add = T, col = NA, ...)
+  }
 }
