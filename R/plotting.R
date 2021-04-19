@@ -208,3 +208,13 @@ add.margin <- function(fnm, margins = c(10,10,10,10)) {
     boxplot(x, pch = 20, cex = cex, lty = 1, xaxt = "n", add = T, col = NA, ...)
   }
 }
+
+
+#' Matplot with less annoying defaults
+#' 
+#' @export
+#' 
+.matplot <- function(x, y, xlab = "", ylab = "", type = "l", lty = 1, pch = 20, ...) {
+  matplot(x, y, type = type, lty = lty, pch = pch, ylab = "", xlab = "", ...)
+  title(xlab = xlab, ylab = ylab, line = 2.5)
+} 

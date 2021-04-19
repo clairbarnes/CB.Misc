@@ -4,7 +4,7 @@
 \alias{.boxplot}
 \title{Boxplot with less annoying defaults}
 \usage{
-.boxplot(x, cex = 0.4, main = "", xlab = "", ylab = "", ...)
+.boxplot(x, cex = 0.4, main = "", xlab = "", ylab = "", hline = NA, ...)
 }
 \description{
 Boxplot with less annoying defaults
