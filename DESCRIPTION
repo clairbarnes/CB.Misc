@@ -8,6 +8,7 @@ Depends:
     roxygen2,
 	beepr,
 	knitr,
+	plyr,
 	xtable
 License: What license is it under?
 Encoding: UTF-8
