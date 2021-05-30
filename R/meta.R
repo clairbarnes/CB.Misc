@@ -6,7 +6,7 @@ refresh <- function(pkg) {
     require(devtools)
     require(roxygen2)
     org.dir <- getwd()
-    target.dir <- paste0("/home/clair/R/My-packages/", pkg)
+    target.dir <- system(paste("find ~/R -name", pkg), intern = T)
     
     if (org.dir != target.dir) {setwd(target.dir)}
     document()
