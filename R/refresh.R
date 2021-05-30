@@ -15,4 +15,3 @@ refresh <- function(pkg) {
     setwd(org.dir)
 }
 
-

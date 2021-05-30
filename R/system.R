@@ -1,5 +1,4 @@
 
-
 #' Change desktop wallpaper
 #'
 #' @export

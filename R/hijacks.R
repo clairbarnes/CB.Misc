@@ -1,5 +1,4 @@
 
-
 #' Identify maximum value
 #' 
 #' Replaces base function with possibility to return indices
@@ -114,4 +113,3 @@ r.norminvwishart <- function(mu0, lambda, S, nu) {
     mu <- rmvn(1, mu0, 1/lambda * Sigma)
     return(list(mu = mu, Sigma = Sigma))
 }
-

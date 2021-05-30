@@ -434,4 +434,3 @@ bib.dropdown <- function(fnm = "~/texmf/bibtex/bib/master-refs.bib",
         return(dd)
     }
 }
-

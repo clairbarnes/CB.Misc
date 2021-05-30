@@ -93,28 +93,3 @@ repo.status <- function(repo.nm) {
              "Untracked files" = max(n.untracked, 0)))
 }
 
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
-# Copy key files to 'admin' repo                                                                        ####
-
-# List of key files to back up
-
-key.files <- function() {
-    
-    # create thesis repository
-    
-    list("R profile" = "~/.Rprofile",
-         "ECMWF API" = "~/.ecmwfapirc",
-         "~/Documents/Snippets.R",
-         "~/Documents/docstyle.sty",
-         "~/Documents/00_setup/Setup.txt",
-         "~/.rednotebook/data/",
-         "/usr/share/hamster-applet/hamster.db")
-    
-    # list all rednotebook entries
-    # list all knitting/sewing patterns
-    # list all source data (.grib, .ncdf)
-    # list all music?
-    # list all ratty pdfs
-    # list all R packages?
-    
-}
