@@ -18,9 +18,3 @@ makepdf(fnm, plotdef, crop = T, margin = c(0, 0, 0, 0), ...)
 \description{
 Quickly produce a pdf
 }
-\examples{
-makepdf("./Documents/tmp.pdf", width = 4, {
-     plot(1:100, dnorm(1:100, 50,20))
-})
-
-}

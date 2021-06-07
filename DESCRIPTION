@@ -1,24 +1,16 @@
 Package: CB.Misc
-Title: Useful functions
+Title: What the Package Does (One Line, Title Case)
 Version: 0.0.0.9000
-Authors@R: person("Clair", "Barnes", email = "clair.with.no.e@gmail.com", role = c("aut", "cre"))
-Description: Collection of handy support functions to make everything a little easier.
-Depends: devtools, roxygen2, beepr, knitr, plyr, xtable
-License: What license is it under?
+Authors@R: 
+    person(given = "First",
+           family = "Last",
+           role = c("aut", "cre"),
+           email = "first.last@example.com",
+           comment = c(ORCID = "YOUR-ORCID-ID"))
+Description: What the package does (one paragraph).
+License: `use_mit_license()`, `use_gpl3_license()` or friends to pick a
+    license
 Encoding: UTF-8
+LazyData: true
+Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.1
-RemoteType: github
-RemoteHost: api.github.com
-RemoteRepo: CB.Misc
-RemoteUsername: clairbarnes
-RemoteRef: HEAD
-RemoteSha: 6a34015e52fe06fa2e2389021aa4f14c1f23a6a0
-GithubRepo: CB.Misc
-GithubUsername: clairbarnes
-GithubRef: HEAD
-GithubSHA1: 6a34015e52fe06fa2e2389021aa4f14c1f23a6a0
-NeedsCompilation: no
-Packaged: 2021-05-30 15:31:03 UTC; clair
-Author: Clair Barnes [aut, cre]
-Maintainer: Clair Barnes <clair.with.no.e@gmail.com>
-Built: R 4.1.0; ; 2021-05-30 14:58:44 UTC; unix

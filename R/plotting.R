@@ -8,10 +8,6 @@
 #'
 #' @export
 #'
-#' @examples makepdf("./Documents/tmp.pdf", width = 4, {
-#'      plot(1:100, dnorm(1:100, 50,20))
-#' })
-#'
 makepdf <- function(fnm, plotdef, crop = T, margin = c(0,0,0,0), ...) {
 
     fnm <- paste0(gsub("\\.pdf", "", fnm), ".pdf")
@@ -24,7 +20,6 @@ makepdf <- function(fnm, plotdef, crop = T, margin = c(0,0,0,0), ...) {
     add.margin(fnm, margin)
 }
 
-
 #' Wrapper function to get vector of transparent colours
 #'
 #' @param cols Vector of colours to adjust
@@ -36,7 +31,6 @@ makepdf <- function(fnm, plotdef, crop = T, margin = c(0,0,0,0), ...) {
 transp <- function(cols, alpha = 0.4) {
     mapply(adjustcolor, cols, alpha = alpha)
 }
-
 
 #' Alternative rainbow colour palette
 #'
@@ -53,28 +47,28 @@ rbow <- function(n, bias = 1, rev = F) {
 
 
 #' Colour palette of cool colours (designed as companion to heat.colors)
-#' 
+#'
 #' @export
-#' 
+#'
 cool.colors <- function(n, bias = 1, rev = F) {
-    
+
     cols <- c("midnightblue", "dodgerblue", "aquamarine", "honeydew")
     if(rev) cols <- rev(cols)
-    
+
     crp <- colorRampPalette(cols, bias = bias)
     crp(n)
 }
 
 
 #' Quick palette of colours from cool to warm, separated by white
-#' 
+#'
 #' @param ncool Number of colours to generate from cool.colors()
 #' @param nwarm Number of colours to generate from heat.colors()
-#' 
+#'
 #' @export
-#' 
+#'
 temp.cols <- function(ncool, nwarm, mid.col = "white") {
-    
+
     cv <- c(cool.colors(ncool), mid.col, rev(heat.colors(nwarm)))
     cv[!is.na(cv)]
 }
@@ -95,19 +89,19 @@ reset.par <- function(...) {
 #' @export
 #'
 test.colramp <- function(mycolramp, n = 100) {
-  z = matrix(1:n, nrow = 1)
-  x = 1
-  y = seq(3, 2345, len = n) # supposing 3 and 2345 are the range of your data
+    z = matrix(1:n, nrow = 1)
+    x = 1
+    y = seq(3, 2345, len = n) # supposing 3 and 2345 are the range of your data
 
-  image(x, y, z, col = mycolramp(n), axes = FALSE, xlab = "", ylab = "")
+    image(x, y, z, col = mycolramp(n), axes = FALSE, xlab = "", ylab = "")
 }
 
 
 
 #' Plot pch symbols
-#' 
+#'
 #' @export
-#' 
+#'
 pch <- function() {
     plot(rep(1:5,5), rep(5:1, each = 5), pch = 1:25, xlab = "", ylab = "", bty = "n", xaxt = "n", yaxt = "n",
          ylim = c(0,5), xlim = c(0,5), bg = "red")
@@ -129,7 +123,7 @@ pch <- function() {
 #' @export
 #'
 filled.band <- function(x, y.max, y.min, col, border = NA, ...) {
-  polygon(c(x, rev(x)), c(y.max, rev(y.min)), col = col, border = border, ...)
+    polygon(c(x, rev(x)), c(y.max, rev(y.min)), col = col, border = border, ...)
 }
 
 
@@ -142,10 +136,10 @@ filled.band <- function(x, y.max, y.min, col, border = NA, ...) {
 #'
 filled.ellipse <- function(ell, ...) {
 
-  ell.lower <- ell[which.min(ell[,1]):which.max(ell[,1]),]
-  ell.upper <- ell[c(which.max(ell[,1]):100, 1:which.min(ell[,1])),]
+    ell.lower <- ell[which.min(ell[,1]):which.max(ell[,1]),]
+    ell.upper <- ell[c(which.max(ell[,1]):100, 1:which.min(ell[,1])),]
 
-  polygon(c(ell.upper[,1], ell.lower[,1]), c(ell.upper[,2], ell.lower[,2]), ...)
+    polygon(c(ell.upper[,1], ell.lower[,1]), c(ell.upper[,2], ell.lower[,2]), ...)
 }
 
 
@@ -155,7 +149,7 @@ filled.ellipse <- function(ell, ...) {
 #' @export
 #'
 px2ellipse <- function(px, ...) {
-  ellipse(cov(px), centre = apply(px, 2, mean), ...)
+    ellipse(cov(px), centre = apply(px, 2, mean), ...)
 }
 
 
@@ -164,14 +158,14 @@ px2ellipse <- function(px, ...) {
 #' @export
 #'
 eivecs <- function(cm, centre = c(0,0), ...) {
-  ev <- eigen(cm)
+    ev <- eigen(cm)
 
-  sapply(1:length(ev$values), function(i) {
-    v <- ev$values[i] * ev$vectors[,i]
-    Arrows(centre[1], centre[2], centre[1] + v[1], centre[2] + v[2],
-           arr.adj = 1, arr.length = 0.3, ...)
-    v
-  })
+    sapply(1:length(ev$values), function(i) {
+        v <- ev$values[i] * ev$vectors[,i]
+        Arrows(centre[1], centre[2], centre[1] + v[1], centre[2] + v[2],
+               arr.adj = 1, arr.length = 0.3, ...)
+        v
+    })
 }
 
 #' Crop a pdf
@@ -181,7 +175,7 @@ eivecs <- function(cm, centre = c(0,0), ...) {
 #' @export
 #'
 crop.pdf <- function(filenm) {
-  system2('pdfcrop', c(filenm, filenm))
+    system2('pdfcrop', c(filenm, filenm))
 }
 
 
@@ -191,30 +185,30 @@ crop.pdf <- function(filenm) {
 #'
 add.margin <- function(fnm, margins = c(10,10,10,10)) {
 
-  fnm <- paste0(gsub("\\.pdf", "", fnm), ".pdf")
-  margins <- paste(margins, collapse = " ")
-  system2("pdfcrop", args = paste0("--margins '", margins, "' ", fnm, " ", fnm))
+    fnm <- paste0(gsub("\\.pdf", "", fnm), ".pdf")
+    margins <- paste(margins, collapse = " ")
+    system2("pdfcrop", args = paste0("--margins '", margins, "' ", fnm, " ", fnm))
 }
 
 
 #' Boxplot with less annoying defaults
-#' 
+#'
 #' @export
-#' 
+#'
 .boxplot <- function(x, cex = 0.4, main = "", xlab = "", ylab = "", hline = NA, ...) {
-  boxplot(x, pch = 20, cex = cex, lty = 1, xlab = xlab, ylab = ylab, main = main, col = NA, ...)
-  if (!is.na(hline)) {
-    abline(h = hline, lty = "22")
-    boxplot(x, pch = 20, cex = cex, lty = 1, xaxt = "n", add = T, col = NA, ...)
-  }
+    boxplot(x, pch = 20, cex = cex, lty = 1, xlab = xlab, ylab = ylab, main = main, col = NA, ...)
+    if (!is.na(hline)) {
+        abline(h = hline, lty = "22")
+        boxplot(x, pch = 20, cex = cex, lty = 1, xaxt = "n", add = T, col = NA, ...)
+    }
 }
 
 
 #' Matplot with less annoying defaults
-#' 
+#'
 #' @export
-#' 
+#'
 .matplot <- function(x, y, xlab = "", ylab = "", type = "l", lty = 1, pch = 20, ...) {
-  matplot(x, y, type = type, lty = lty, pch = pch, ylab = "", xlab = "", ...)
-  title(xlab = xlab, ylab = ylab, line = 2.5)
-} 
+    matplot(x, y, type = type, lty = lty, pch = pch, ylab = "", xlab = "", ...)
+    title(xlab = xlab, ylab = ylab, line = 2.5)
+}
