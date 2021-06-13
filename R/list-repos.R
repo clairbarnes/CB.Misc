@@ -31,6 +31,8 @@ repo.status <- function(repo.nm) {
     n.unstaged <- min(untracked, length(gs)+1) - unstaged - 1
     n.untracked <- length(gs) - untracked
 
+    if(n.unstaged == 1 & sum(grepl("modified.+gitignore",gs))) { n.unstaged <- 0 }
+
     # return counts
     return(c("Pending commits" =  max(as.integer(n.commits), 0),
              "Changes to commit" = max(n.to.commit, 0),
